@@ -1,0 +1,63 @@
+<div class="col-md-4">
+    <h4>Clients</h4>
+
+    <h2 ng-show="loading"><div class="spinner"></div></h2>
+
+    <div ng-hide="loading" class="list-group">
+        <a href="#" ng-repeat="client in clients | orderBy:'account.name'" class="list-group-item" ng-click="selectClient(client)" ng-class="{ 'active': selected_client == client }">{{ client.account.name }}</a>
+        <a class="list-group-item list-group-item-info" href="/clients/new"><span class="glyphicon glyphicon-plus"></span> Add New Client</a>
+    </div>
+
+    <div ng-hide="loading" class="list-group">
+        <a class="list-group-item" ng-click="loadClients()" href="#"><span class="glyphicon glyphicon-refresh"></span> Refresh</a>
+    </div>
+</div>
+<div class="col-md-8" ng-show="selected_client != null">
+    <h4>Servers</h4>
+
+    <div class="server panel" ng-class="{ 'panel-success': server.backups_enabled, 'panel-default': !server.backups_enabled }" ng-repeat="server in selected_client.servers | orderBy:'-created'" ng-controller="ServerCtrl" ng-init="expanded = false">
+
+        <div class="panel-heading"><b>{{ server.name }}</b> <small class="pull-right">{{ server.id }}</small></div>
+
+        <div class="panel-body" ng-hide="server.backups"><h2>No Backups.</h2></div>
+
+        <table class="table table-striped" ng-show="server.backups.length > 0">
+            <thead>
+                <tr>
+                    <th>Backup/Snapshot ID</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="backup in server.backups | orderBy:'-created'">
+                    <td><small>{{ backup.id }}</small></td>
+                    <td am-time-ago="backup.created" data-trigger="hover" data-title="{{ backup.created | date:'MMM d @ h:mma' }}" data-container="body" data-placement="left" bs-tooltip></td>
+                    <td>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" title="Restore {{ server.name }} to Backup" data-placement="left" data-content="This will take down the current server, and boot this image in it's place. This will retain the current server however." data-template="/static/partials/confirm.tpl.html" data-animation="am-flip-x" ng-click="prepareRestoreImage(server, backup)" bs-popover><span class="glyphicon glyphicon-flash"></span></button>
+                            <button type="button" class="btn btn-default" title="Delete Backup" data-placement="left" data-content="This will delete the backup permanently!" data-template="/static/partials/confirm.tpl.html" data-animation="am-flip-x" ng-click="prepareDeleteImageJob(server, backup)" bs-popover><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="panel-footer">
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default" title="{{ toggleBackupsButtonText(server) }}" ng-click="prepareToggleBackups(server)" data-content="This will modify the automated backups on {{ server.name }}." data-template="/static/partials/confirm.tpl.html" data-animation="am-flip-x" bs-popover><span class="glyphicon glyphicon-off"></span> {{ toggleBackupsButtonText(server) }}</button>
+
+                <button type="button" class="btn btn-default" title="Confirm Backup" data-content="Performing the backup will interrupt service on {{ server.name }}! Please be sure to note the interruption." data-template="/static/partials/confirm.tpl.html" data-animation="am-flip-x" ng-click="prepareBackupJob(server)" bs-popover><span class="glyphicon glyphicon-cloud-upload"></span> Queue Backup</button>
+
+                <button type="button" class="btn btn-default" ng-model="expanded" bs-checkbox><span class="glyphicon glyphicon-info-sign"></span> Server Details</button>
+            </div>
+
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-danger" title="Destroy Server" data-content="Destroying the server will remove {{ server.name }} permanently! This process cannot be undone. This will NOT delete the images on the account, these must be removed manually." data-template="/static/partials/confirm.tpl.html" data-animation="am-flip-x" data-placement="left" ng-click="prepareDestroyJob(server)" bs-popover><span class="glyphicon glyphicon-trash"></span> Destroy Server</button>
+            </div>
+
+            <pre class="server-details" ng-bind="server | json" ng-show="expanded"></pre>
+        </div>
+    </div>
+</div>

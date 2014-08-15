@@ -1,0 +1,123 @@
+body{background: #eee url(../images/gplaypattern.png);}
+body {
+    /* min-height: 2000px; */
+    padding-top: 70px;
+    margin-bottom: 20px;
+}
+
+.server {
+    table.table {
+        td {
+            vertical-align: middle;
+        }
+    }
+}
+
+.jobs table th:first-child, .jobs table td:first-child, .jobs table th:last-child, .jobs table td:last-child,
+.server table th:last-child, .server table td:last-child {
+    text-align: center;
+}
+
+.navbar-static-top {
+    margin-bottom: 19px;
+}
+
+.list-group-item.ng-enter,
+.list-group-item.ng-leave {
+    -webkit-transition:0.5s linear all;
+    transition:0.5s linear all;
+}
+
+.list-group-item.ng-enter,
+.list-group-item.ng-leave.ng-leave-active {
+    opacity:0;
+}
+.list-group-item.ng-leave,
+.list-group-item.ng-enter.ng-enter-active {
+    opacity:1;
+}
+
+pre.server-details {
+    margin-top: 10px;
+}
+
+button.job-id {
+    width: 100%;
+}
+
+.alert.top, .alert.top-left, .alert.top-right {
+    position: fixed;
+    top: 50px;
+    z-index: 1050;
+    margin: 20px;
+}
+
+.alert.top-right {
+    right: 0;
+}
+
+.spin {
+    -webkit-animation: spin 1s infinite linear;
+    -moz-animation: spin 1s infinite linear;
+    -o-animation: spin 1s infinite linear;
+    animation: spin 1s infinite linear;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin:50% 50%;
+    -ms-transform-origin:50% 50%; /* IE 9 */
+}
+
+@-moz-keyframes spin {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    background-color: #428bca;
+
+    margin: 100px auto;
+    -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+    animation: rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes rotateplane {
+    0% { -webkit-transform: perspective(120px) }
+    50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+    100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes rotateplane {
+    0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
+        } 50% {
+            transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+            -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
+            } 100% {
+                transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+                -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+            }
+        }

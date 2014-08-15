@@ -1,0 +1,14 @@
+<div class="popover" ng-show="content">
+  <div class="arrow"></div>
+  <h3 class="popover-title" ng-bind-html="title" ng-show="title"></h3>
+  <div class="popover-content">
+    <div ng-show="confirm_dialog.loading" style="width:100%;display:inline-block;min-width:200px;"><div class="spinner" style="margin:30px auto;"></div></div>
+    <div ng-hide="confirm_dialog.loading">
+      <p ng-bind="content"></p>
+      <div class="form-actions" style="min-width:300px;">
+        <button type="button" class="btn btn-danger" ng-click="confirm_dialog.confirm($hide)" ng-bind="confirm_dialog.confirm_text"></button>
+        <button type="button" class="btn btn-default" ng-click="confirm_dialog.cancel();$hide()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

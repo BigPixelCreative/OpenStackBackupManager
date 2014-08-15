@@ -1,0 +1,32 @@
+{
+  "name": "OpenStackBackupManager",
+  "version": "1.0.0",
+  "authors": [
+    "Wyatt Johnson <wyatt@wyattjohnson.ca>"
+  ],
+  "description": "Manages backups for servers managed by OpenStack",
+  "main": "index.js",
+  "license": "MIT",
+  "homepage": "https://wyattjohnson.ca/",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.18",
+    "bootstrap": "~3.2.0",
+    "angular-strap": "~2.0.3",
+    "angular-animate": "~1.2.18",
+    "angular-route": "~1.2.18",
+    "angular-resource": "~1.2.19",
+    "angular-moment": "~0.7.1"
+  },
+  "resolutions": {
+    "bootstrap": "~3.1.1",
+    "angular": "~1.2.18"
+  }
+}

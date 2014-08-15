@@ -1,0 +1,47 @@
+<div class="col-md-12 jobs">
+    <h2 ng-show="loading"><div class="spinner"></div></h2>
+    <div ng-show="detailedJob">
+        <pre ng-bind="detailedJob | json"></pre>
+        <button type="button" class="btn btn-default" ng-click="detailedJob = null">Close</button>
+    </div>
+    <div ng-hide="loading">
+        <h2 style="text-align:center;" ng-show="jobs.length == 0">No Jobs</h2>
+        <table class="table table-condensed" ng-show="jobs.length > 0">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th ng-click="jobPredicate = '-created'; jobPredicateReverse=false">ID</th>
+                    <th ng-click="jobPredicate = '-created'; jobPredicateReverse=!jobPredicateReverse">Created</th>
+                    <th ng-click="jobPredicate = '-queued_for'; jobPredicateReverse=!jobPredicateReverse">Queued</th>
+                    <th ng-click="jobPredicate = 'type'; jobPredicateReverse=!jobPredicateReverse">Type</th>
+                    <th ng-click="jobPredicate = '-finished'; jobPredicateReverse=!jobPredicateReverse">Finished</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="job in jobs | orderBy:jobPredicate:jobPredicateReverse | limitTo:jobLimit" ng-class="{ 'danger': job.deleting, 'active': job.status == 'queued', 'success': job.status == 'completed' }">
+                    <td><span ng-class="getStatusClass(job)" data-title="{{ getDateInformation(job) }}" data-container="body" data-placement="right" bs-tooltip></span></td>
+                    <td><button type="button" class="btn btn-xs job-id" ng-class="{ 'btn-default': job.status == 'queued', 'btn-success': job.status == 'completed' }" ng-click="viewDetailJob(job)">{{ job._id }}</button></td>
+                    <td ng-bind="job.created | date:'MMM d @ h:mma'"></td>
+                    <td am-time-ago="job.queued_for" data-trigger="hover" data-title="{{ job.queued_for | date:'MMM d @ h:mma' }}" data-container="body" data-placement="left" bs-tooltip></td>
+                    <td>{{ job.type }}</td>
+                    <td am-time-ago="job.finished" data-trigger="hover" data-title="{{ job.finished | date:'MMM d @ h:mma' }}" data-container="body" data-placement="left" bs-tooltip></td>
+                    <td>
+                        <div class="btn-group" ng-hide="job.deleting">
+                            <button ng-show="job.status == 'queued'" type="button" class="btn btn-xs btn-danger" ng-click="removeJob(job)"><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-default" ng-click="refreshJobs()"><span class="glyphicon glyphicon-refresh"></span> Refresh Jobs</button>
+        <div class="pull-right" ng-show="jobs.length != 0">
+            <label>Number of Jobs (from {{ jobs.length }}):</label>
+            <div class="btn-group" ng-model="jobLimit" bs-radio-group>
+                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="10"> 10</label>
+                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="25"> 25</label>
+                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="50"> 50</label>
+            </div>
+        </di>
+    </div>
+</div>

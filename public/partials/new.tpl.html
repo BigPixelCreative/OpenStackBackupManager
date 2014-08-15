@@ -1,0 +1,71 @@
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">Account</div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-show="client.account.name">Client Name: <b>{{ client.account.name}}</b></li>
+            <li class="list-group-item" ng-show="selectedProvider">Cloud Provider: <b>{{ selectedProvider.name }}</b></li>
+            <li class="list-group-item" ng-show="client.account.userName">Email: <b>{{ client.account.userName}}</b></li>
+            <li class="list-group-item" ng-show="client.account.password">Password: <b>YES</b></li>
+            <li class="list-group-item list-group-item-danger" ng-show="!newClientForm.password.$pristine && client.account.password.length == 0">Password: <b>NO</b></li>
+        </ul>
+    </div>
+    <div class="panel panel-default" ng-show="client.servers.length > 0">
+        <div class="panel-heading">Servers</div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="server in client.servers" ng-class="{ 'list-group-item-success': server.backups_enabled }">{{ server.name }} <span class="pull-right" ng-class="{ 'glyphicon glyphicon-ok': server.backups_enabled, 'glyphicon glyphicon-remove': !server.backups_enabled }"></span></li>
+        </ul>
+    </div>
+</div>
+<div class="col-md-8">
+    <h2 ng-show="loading"><div class="spinner"></div></h2>
+    <div ng-show="current_step == 1">
+        <h4>Add New Client</h4>
+        <form class="form-horizontal" role="form" ng-submit="listServers()" name="newClientForm" novalidate>
+            <div class="form-group">
+                <label for="accountName" class="col-sm-3 control-label">Client Name</label>
+                <div class="col-sm-9">
+                    <input ng-model="client.account.name" type="text" class="form-control" id="accountName" placeholder="Enter name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="provider" class="col-sm-3 control-label">Cloud Provider</label>
+                <div class="col-sm-9">
+                    <button type="button" class="btn btn-default" ng-model="selectedProvider" ng-options="provider as provider.name for provider in providers" bs-select>
+                        Action <span class="caret"></span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="accountUserName" class="col-sm-3 control-label">Email address</label>
+                <div class="col-sm-9">
+                    <input ng-model="client.account.userName" type="email" class="form-control" id="accountUserName" placeholder="Enter email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1" class="col-sm-3 control-label">Password</label>
+                <div class="col-sm-9">
+                    <input name="password" ng-model="client.account.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button type="submit" class="btn btn-default" ng-click="nextStep()">Next</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div ng-show="current_step == 2 && !loading">
+        <h4>Select {{ client.account.name }} servers to backup</h4>
+        <div class="list-group">
+            <a href="#" class="list-group-item" ng-repeat="server in client.servers" ng-click="toggleServer(server)" ng-class="{ 'list-group-item-success': server.backups_enabled }">{{ server.name }} <span class="glyphicon glyphicon-ok pull-right" ng-show="server.backups_enabled"></span></a>
+        </div>
+        <button type="button" class="btn btn-default" ng-click="listServers()">Refresh</button>
+        <button type="button" class="btn btn-default" ng-click="nextStep()">Next</button>
+    </div>
+    <div ng-show="current_step == 3">
+        <h4>Confirmation</h4>
+        <p>Confirm all selections on the left, and click continue below to add the client to the backup system</p>
+        <button type="button" class="btn btn-default" ng-click="nextStep()">Add Client</button>
+    </div>
+</div>
