@@ -7,7 +7,7 @@
   "description": "Manages backups for servers managed by OpenStack",
   "main": "index.js",
   "license": "MIT",
-  "homepage": "https://wyattjohnson.ca/",
+  "homepage": "https://bigpixel.ca/",
   "private": true,
   "ignore": [
     "**/.*",
