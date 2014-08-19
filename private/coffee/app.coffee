@@ -4,8 +4,10 @@
 
 app = angular.module 'openStackBackupManager', [ "ngAnimate", "ngRoute", "mgcrea.ngStrap", "angularMoment", "ngResource" ]
         .config [ '$locationProvider', '$routeProvider', ($locationProvider, $routeProvider) ->
+            # Enable HTML mode
             $locationProvider.html5Mode true
 
+            # Define routes
             $routeProvider
                 .when("/clients",
                     templateUrl: "/static/partials/list.tpl.html",
@@ -276,10 +278,12 @@ app.controller 'ClientCtrl', [ 'Client', '$scope', '$location', (Client, $scope,
 
     $scope.newClient = {}
 
+    # Select a client
     $scope.selectClient = (client) ->
         $scope.selected_client = client
         return
 
+    # Clients
     $scope.loadClients = ->
         $scope.loading = true
         $scope.selected_client = null
