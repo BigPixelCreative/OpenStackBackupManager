@@ -6,7 +6,15 @@
     </div>
     <div ng-hide="loading">
         <h2 style="text-align:center;" ng-show="jobs.length == 0">No Jobs</h2>
-        <table class="table table-condensed" ng-show="jobs.length > 0">
+        <div ng-show="jobs.length != 0">
+            <label>Number of Jobs (from {{ jobs.length }}):</label>
+            <div class="btn-group" ng-model="jobLimit" bs-radio-group>
+                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="10"> 10</label>
+                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="25"> 25</label>
+                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="50"> 50</label>
+            </div>
+        </div>
+        <table class="table table-condensed" ng-show="jobs.length != 0">
             <thead>
                 <tr>
                     <th>Status</th>
@@ -35,13 +43,5 @@
             </tbody>
         </table>
         <button type="button" class="btn btn-default" ng-click="refreshJobs()"><span class="glyphicon glyphicon-refresh"></span> Refresh Jobs</button>
-        <div class="pull-right" ng-show="jobs.length != 0">
-            <label>Number of Jobs (from {{ jobs.length }}):</label>
-            <div class="btn-group" ng-model="jobLimit" bs-radio-group>
-                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="10"> 10</label>
-                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="25"> 25</label>
-                <label class="btn btn-default"><input type="radio" class="btn btn-default" value="50"> 50</label>
-            </div>
-        </div>
     </div>
 </div>
