@@ -187,22 +187,34 @@ module.exports.addUser = function(username, password, callback) {
         // Handle errors
         if (err) {
             console.error("Cannot connect to database: " + err);
-            return callback(err, false);
+
+            if (callback !== null) {
+                return callback(err, false);
+            }
+            else {
+                throw err;
+            }
         }
 
-        // Got the users collection
-        var users = db.collection("users")
-
-        users.insert({ username: username, password: bcrypt.hashSync(password, 8) }, {w: 1}, function(err, user) {
+        db.collection("users")
+            .insert({ username: username, password: bcrypt.hashSync(password, 8) }, {w: 1}, function(err, user) {
             // Close the DB, as we are done with it
             db.close();
 
             if (err) {
                 console.error("Error in adding user: " + err);
-                return callback(err, null);
+
+                if (callback !== null) {
+                    return callback(err, false);
+                }
+                else {
+                    throw err;
+                }
             }
 
-            return callback(null, user);
+            if (callback !== null) {
+                return callback(null, user);
+            }
         });
 
     });

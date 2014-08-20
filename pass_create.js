@@ -1,5 +1,7 @@
 var database = require('./resources/database');
 
-database.addUser('robert@bigpixel.ca', '', function(err, records) {
+// Add the user to the database
+//
+// Example: database.addUser(EMAIL_ADDRESS, PASSWORD);
 
-});
+database.addUser('', '');
