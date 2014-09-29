@@ -4,4 +4,4 @@ var database = require('./resources/database');
 //
 // Example: database.addUser(EMAIL_ADDRESS, PASSWORD);
 
-database.addUser('', '');
+database.addUser('', '', null);
